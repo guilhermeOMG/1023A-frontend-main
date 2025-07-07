@@ -1,141 +1,135 @@
-import React, { useEffect, useState } from "react"
-import './Pagina.css'
+import React, { useEffect, useState } from "react";
+import './Cadastro.css';
+
 interface ClientesState {
-    id: number,
-    nome: string,
-    email: string,
-    telefone: string
+  id: number;
+  nome: string;
+  cpf: string;
+  email: string;
+  endereco: string;
+  genero: 'M' | 'F';
 }
 
 function CadastroCliente() {
-    const [id, setId] = useState("")
-    const [nome, setNome] = useState("")
-    const [email, setEmail] = useState("")
-    const [telefone, setTelefone] = useState("")
-    const [mensagem, setMensagem] = useState("")
-    const [clientes, setClientes] = useState<ClientesState[]>([])
-    useEffect(() => {
-        const buscaDados = async () => {
-            try {
-                const resultado = await fetch("http://localhost:8000/clientes")
-                if (resultado.status === 200) {
-                    const dados = await resultado.json()
-                    setClientes(dados)
-                }
-                if (resultado.status === 400) {
-                    const erro = await resultado.json()
-                    setMensagem(erro.mensagem)
-                    //console.log(erro.mensagem)
-                }
-            }
-            catch (erro) {
-                setMensagem("Fetch não functiona")
-            }
+  const [id, setId] = useState("");
+  const [nome, setNome] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [email, setEmail] = useState("");
+  const [endereco, setEndereco] = useState("");
+  const [genero, setGenero] = useState<'M' | 'F'>('M');
+  const [mensagem, setMensagem] = useState("");
+  const [clientes, setClientes] = useState<ClientesState[]>([]);
+
+  useEffect(() => {
+    const buscaDados = async () => {
+      try {
+        const resultado = await fetch("http://localhost:8000/clientes");
+        if (resultado.status === 200) {
+          const dados = await resultado.json();
+          setClientes(dados);
+        } else if (resultado.status === 400) {
+          const erro = await resultado.json();
+          setMensagem(erro.mensagem);
         }
-        buscaDados()
-    }, [])// [] => significa as dependências do useEffects
-    async function TrataCadastro(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        //Criar um novo cliente
-        const novoCliente: ClientesState = {
-            id: parseInt(id),
-            nome: nome,
-            email: email,
-            telefone: telefone
-        }
-        try {
-            const resposta = await fetch("http://localhost:8000/clientes", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(novoCliente)
-            })
-           
-            if (resposta.status === 200) {
-                const dados = await resposta.json()
-                setClientes([...clientes, dados])
-            }
-            if (resposta.status === 400) {
-                const erro = await resposta.json()
-                setMensagem(erro.mensagem)
-                //console.log(erro.mensagem)
-            }
+      } catch (erro) {
+        setMensagem("Erro ao buscar clientes");
+      }
+    };
+    buscaDados();
+  }, []);
+
+  async function TrataCadastro(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const novoCliente: Omit<ClientesState, 'id'> & { id?: number } = {
+      nome,
+      cpf,
+      email,
+      endereco,
+      genero
+    };
+
+    if (id !== "") {
+      novoCliente.id = parseInt(id);
+    }
+
+    try {
+      const resposta = await fetch("http://localhost:8000/clientes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(novoCliente)
+      });
+
+      if (resposta.status === 201 || resposta.status === 200) {
+        const dados = await resposta.json();
+        setClientes([...clientes, dados]);
+        setMensagem("Cliente cadastrado com sucesso!");
+        // limpar campos
+        setId(""); setNome(""); setCpf(""); setEmail(""); setEndereco(""); setGenero('M');
+      } else if (resposta.status === 400) {
+        const erro = await resposta.json();
+        setMensagem(erro.mensagem);
+      }
+    } catch (erro) {
+      setMensagem("Erro ao cadastrar cliente");
+    }
+  }
+
+  return (
+    <>
+      <header>
+        <div>Logo</div>
+        <nav>
+          <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="">Sobre</a></li>
+            <li><a href="">Contato</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        {mensagem && (
+          <div className="mensagem">
+            <p>{mensagem}</p>
+          </div>
+        )}
+
+        <div className="container-listagem">
+          {clientes.map(cliente => (
+            <div key={cliente.id} className="cliente-container">
+              <div><strong>Nome:</strong> {cliente.nome}</div>
+              <div><strong>CPF:</strong> {cliente.cpf}</div>
+              <div><strong>Email:</strong> {cliente.email}</div>
+              <div><strong>Endereço:</strong> {cliente.endereco}</div>
+              <div><strong>Gênero:</strong> {cliente.genero}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="container-cadastro">
+          <form onSubmit={TrataCadastro}>
+            <input type="text" name="id" placeholder="ID (opcional)" value={id} onChange={e => setId(e.target.value)} />
+            <input type="text" name="nome" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} />
+            <input type="text" name="cpf" placeholder="CPF" value={cpf} onChange={e => setCpf(e.target.value)} />
+            <input type="email" name="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+            <input type="text" name="endereco" placeholder="Endereço" value={endereco} onChange={e => setEndereco(e.target.value)} />
             
-        }
-        catch (erro) {
-            setMensagem("Fetch não functiona")
-        }
+            <select name="genero" value={genero} onChange={e => setGenero(e.target.value as 'M' | 'F')}>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
 
-    }
-    function trataId(event: React.ChangeEvent<HTMLInputElement>) {
-        setId(event.target.value)
-    }
-    function trataNome(event: React.ChangeEvent<HTMLInputElement>) {
-        setNome(event.target.value)
-    }
-    function trataEmail(event: React.ChangeEvent<HTMLInputElement>) {
-        setEmail(event.target.value)
-    }
-    function trataTelefone(event: React.ChangeEvent<HTMLInputElement>) {
-        setTelefone(event.target.value)
-    }
-    return (
-        <>
-            <header>
-                <div>Logo</div>
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="">Home</a>
-                        </li>
-                        <li>
-                            <a href="">Home</a>
-                        </li>
-                        <li>
-                            <a href="">Home</a>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-            <main>
-                {mensagem &&
-                    <div className="mensagem">
-                        <p>{mensagem}</p>
-                    </div>
-                }
+            <input type="submit" value="Cadastrar Cliente" />
+          </form>
+        </div>
+      </main>
 
-                <div className="container-listagem">
-                    {clientes.map(cliente => {
-                        return (
-                            <div className="cliente-container">
-                                <div className="cliente-nome">
-                                    {cliente.nome}
-                                </div>
-                                <div className="cliente-email">
-                                    {cliente.email}
-                                </div>
-                                <div className="cliente-telefone">
-                                    {cliente.telefone}
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
-                <div className="container-cadastro">
-                    <form onSubmit={TrataCadastro}>
-                        <input type="text" name="id" id="id" onChange={trataId} placeholder="Id" />
-                        <input type="text" name="nome" id="nome" onChange={trataNome} placeholder="Nome" />
-                        <input type="email" name="email" id="email" onChange={trataEmail} placeholder="Email" />
-                        <input type="text" name="telefone" id="telefone" onChange={trataTelefone} placeholder="Telefone" />
-                        <input type="submit" value="Cadastrar" />
-                    </form>
-
-                </div>
-            </main>
-            <footer></footer>
-        </>
-    )
+      <footer></footer>
+    </>
+  );
 }
 
-export default CadastroCliente
+export default CadastroCliente;
