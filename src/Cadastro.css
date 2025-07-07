@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10vw;
+    align-items: center;
+    min-height: 10vh;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header div {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+nav > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+}
+
+nav > ul > li > a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav > ul > li > a:hover {
+    color: #dfeeff;
+}
+
+main {
+    margin-top: 20px;
+    padding: 0 10vw;
+    display: flex;
+    position: relative;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+main > div {
+    flex: 1;
+}
+
+.container-listagem {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.produto-container {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(30, 30, 30, 0.05);
+    min-height: 200px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.produto-container:hover {
+    transform: scale(1.02);
+}
+
+.container-cadastro > form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 0 10px rgba(30, 30, 30, 0.1);
+    border-radius: 8px;
+    background-color: white;
+}
+
+/* NÃO ALTERADO: Inputs */
+
+form > input[type="text"],
+form > input[type="number"],
+form > input[type="email"],
+form > input[type="tel"] {
+    padding: 8px;
+    border: 1px solid #f0f0f0;
+}
+
+form > input[type="text"],
+form > input[type="number"],
+form > input[type="email"],
+form > input[type="tel"]:focus {
+    outline: 1px solid #0205a344;
+}
+
+form > input[type="submit"] {
+    max-width: 150px;
+    padding: 8px;
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #f0f0f0;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form > input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.mensagem {
+    position: absolute;
+    right: 15px;
+    top: -10px;
+    background-color: #F8D7DA;
+    color: #58151C;
+    padding: 8px 20px;
+    border: 1px solid rgb(241, 174, 181);
+    border-radius: 4px;
+    font-weight: bold;
+}
