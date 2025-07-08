@@ -111,7 +111,7 @@ function CadastroCliente() {
 
         <div className="container-cadastro">
           <form onSubmit={TrataCadastro}>
-            <input type="text" name="id" placeholder="ID (opcional)" value={id} onChange={e => setId(e.target.value)} />
+            {/* <input type="text" name="id" placeholder="ID (opcional)" value={id} onChange={e => setId(e.target.value)} /> */}
             <input type="text" name="nome" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} />
             <input type="text" name="cpf" placeholder="CPF" value={cpf} onChange={e => setCpf(e.target.value)} />
             <input type="email" name="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
