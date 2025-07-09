@@ -1,4 +1,4 @@
-import React from 'react';
+{/*import React from 'react';
 
 const BlocoCentral: React.FC = () => {
   return (
@@ -11,4 +11,4 @@ const BlocoCentral: React.FC = () => {
   );
 };
 
-export default BlocoCentral;
+export default BlocoCentral;}*/}

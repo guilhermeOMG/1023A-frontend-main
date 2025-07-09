@@ -5,24 +5,17 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 //import App from './App.tsx'
 //import Container from './Container.tsx'
 import CadastroCliente from './CadastroCliente';
-import BlocoCentral from './BlocoCentral';
-import './index.css';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <CadastroCliente />,
   },
-  {
-    path: "/BlocoCentral",
-    element: <BlocoCentral />,
-  },
 ]);
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-   <BlocoCentral />
     <RouterProvider router={router} />
   </StrictMode>,
 )
