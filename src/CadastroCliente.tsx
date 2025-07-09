@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './Cadastro.css';
+import { Link } from "react-router-dom";
 
 interface ClientesState {
   id: number;
@@ -7,7 +8,7 @@ interface ClientesState {
   cpf: string;
   email: string;
   endereco: string;
-  genero: 'M' | 'F';
+  genero: 'M' | 'F' | 'Outro';
 }
 
 function CadastroCliente() {
@@ -16,7 +17,7 @@ function CadastroCliente() {
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [endereco, setEndereco] = useState("");
-  const [genero, setGenero] = useState<'M' | 'F'>('M');
+  const [genero, setGenero] = useState<'M' | 'F' | 'Outro'>('M');
   const [mensagem, setMensagem] = useState("");
   const [clientes, setClientes] = useState<ClientesState[]>([]);
 
@@ -81,13 +82,11 @@ function CadastroCliente() {
     <>
       <header>
         <div>Logo</div>
-        <nav>
-          <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">Sobre</a></li>
-            <li><a href="">Contato</a></li>
-          </ul>
-        </nav>
+      <nav>
+         <ul>
+          <li><Link to="/BlocoCentral">Home</Link></li>
+        </ul>
+      </nav>
       </header>
 
       <main>
@@ -120,6 +119,7 @@ function CadastroCliente() {
             <select name="genero" value={genero} onChange={e => setGenero(e.target.value as 'M' | 'F')}>
               <option value="M">Masculino</option>
               <option value="F">Feminino</option>
+              <option value="Outro">Outro</option>
             </select>
 
             <input type="submit" value="Cadastrar Cliente" />
