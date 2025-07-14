@@ -44,6 +44,7 @@ main {
     padding: 0 10vw;
     display: flex;
     position: relative;
+    justify-content: center;
     gap: 40px;
     align-items: flex-start;
 }
@@ -52,13 +53,13 @@ main > div {
     flex: 1;
 }
 
-.container-listagem {
+.container-listagem1 {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.cliente-container {
+.cliente-container1 {
     background-color: white;
     border: 1px solid #e0e0e0;
     padding: 20px;
@@ -71,11 +72,11 @@ main > div {
     transition: transform 0.2s;
 }
 
-.cliente-container:hover {
+.cliente-container1:hover {
     transform: scale(1.02);
 }
 
-.container-cadastro > form {
+.container-cadastro1 > form {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -121,7 +122,7 @@ form > input[type="submit"]:hover {
 }
 
 /* MENSAGEM DE ERRO OU SUCESSO */
-.mensagem {
+.mensagem1 {
     position: absolute;
     right: 15px;
     top: -10px;

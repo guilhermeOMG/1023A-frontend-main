@@ -6,9 +6,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 //import Container from './Container.tsx'
 import CadastroCliente from './CadastroCliente';
 import BlocoCentral from './BlocoCentral';
-//import CadastroVendedor from './CadastroVendedor'; // precisa criar/importar esse componente
+import CadastroVendedor from './CadastroVendedor';
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <BlocoCentral />,
+  },
   {
     path: "/BlocoCentral",
     element: <BlocoCentral />,
@@ -17,10 +21,10 @@ const router = createBrowserRouter([
     path: "/clientes",
     element: <CadastroCliente />,
   },
-  /*{
+  {
     path: "/cadastrovendedor",
-    element: <CadastroVendedor />, // precisa criar/importar esse componente
-  }*/
+    element: <CadastroVendedor />,
+  }
 ]);
 
 

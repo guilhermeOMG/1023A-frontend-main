@@ -91,14 +91,14 @@ function CadastroCliente() {
 
       <main>
         {mensagem && (
-          <div className="mensagem">
+          <div className="mensagem1">
             <p>{mensagem}</p>
           </div>
         )}
 
-        <div className="container-listagem">
+        <div className="container-listagem1">
           {clientes.map(cliente => (
-            <div key={cliente.id} className="cliente-container">
+            <div key={cliente.id} className="cliente-container1">
               <div><strong>Nome:</strong> {cliente.nome}</div>
               <div><strong>CPF:</strong> {cliente.cpf}</div>
               <div><strong>Email:</strong> {cliente.email}</div>
@@ -108,7 +108,7 @@ function CadastroCliente() {
           ))}
         </div>
 
-        <div className="container-cadastro">
+        <div className="container-cadastro1">
           <form onSubmit={TrataCadastro}>
             {/* <input type="text" name="id" placeholder="ID (opcional)" value={id} onChange={e => setId(e.target.value)} /> */}
             <input type="text" name="nome" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} />
